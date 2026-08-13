@@ -36,7 +36,7 @@ clients: {
     organization_id:     uuid        { constraint: [foreign_key; NOT NULL] }
     client_name:         text        { constraint: NOT NULL }
     tax_number:          text        { constraint: NOT NULL }
-    county:              text        { constraint: NOT NULL }
+    country_code:        varchar(2)  { constraint: NOT NULL }
     created_at:          timestamptz { constraint: NOT NULL }
     updated_at:          timestamptz { constraint: NOT NULL }
 }

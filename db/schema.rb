@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_13_091810) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_13_173415) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "clients", id: :uuid, default: -> { "uuidv7()" }, force: :cascade do |t|
+    t.text "client_name", null: false
+    t.string "country_code", limit: 2, null: false
+    t.datetime "created_at", null: false
+    t.uuid "organization_id", null: false
+    t.text "tax_number", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id", "tax_number"], name: "index_clients_on_organization_id_and_tax_number", unique: true
+    t.index ["organization_id"], name: "index_clients_on_organization_id"
+    t.check_constraint "country_code::text ~ '^[A-Z]{2}$'::text", name: "clients_country_code_check"
+  end
 
   create_table "memberships", id: :uuid, default: -> { "uuidv7()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -51,6 +63,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_091810) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "clients", "organizations"
   add_foreign_key "memberships", "organizations"
   add_foreign_key "memberships", "users"
   add_foreign_key "sessions", "users"
