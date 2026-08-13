@@ -3,9 +3,9 @@
 one:
   user: one
   organization: one
-  role: MyText
+  role: admin
 
 two:
   user: two
   organization: two
-  role: MyText
+  role: owner
