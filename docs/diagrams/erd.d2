@@ -92,6 +92,8 @@ invoice_items: {
     price_net_cents:      bigint         { constraint: NOT NULL }
     vat_rate:             text           { constraint: NOT NULL }
     description:          text           { constraint: NOT NULL }
+    created_at:           timestamptz    { constraint: NOT NULL }
+    updated_at:           timestamptz    { constraint: NOT NULL }
 }
 
 organizations.id -> memberships.organization_id

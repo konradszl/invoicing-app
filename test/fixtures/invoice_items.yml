@@ -1,0 +1,15 @@
+one:
+  invoice: one
+  quantity: 1.00
+  unit: usł.
+  price_net_cents: 100000
+  vat_rate: "23"
+  description: Software development services
+
+two:
+  invoice: two
+  quantity: 1.00
+  unit: usł.
+  price_net_cents: 100000
+  vat_rate: np II
+  description: Software development services

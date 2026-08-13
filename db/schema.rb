@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_13_224713) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_13_224958) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -24,6 +24,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_224713) do
     t.index ["organization_id", "tax_number"], name: "index_clients_on_organization_id_and_tax_number", unique: true
     t.index ["organization_id"], name: "index_clients_on_organization_id"
     t.check_constraint "country_code::text ~ '^[A-Z]{2}$'::text", name: "clients_country_code_check"
+  end
+
+  create_table "invoice_items", id: :uuid, default: -> { "uuidv7()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description", null: false
+    t.uuid "invoice_id", null: false
+    t.bigint "price_net_cents", null: false
+    t.decimal "quantity", precision: 12, scale: 2, null: false
+    t.text "unit", null: false
+    t.datetime "updated_at", null: false
+    t.text "vat_rate", null: false
+    t.index ["invoice_id"], name: "index_invoice_items_on_invoice_id"
+    t.check_constraint "vat_rate = ANY (ARRAY['23'::text, '22'::text, '8'::text, '7'::text, '5'::text, '4'::text, '3'::text, '0 KR'::text, '0 WDT'::text, '0 EX'::text, 'zw'::text, 'oo'::text, 'np I'::text, 'np II'::text])", name: "invoice_items_vat_rate_check"
   end
 
   create_table "invoices", id: :uuid, default: -> { "uuidv7()" }, force: :cascade do |t|
@@ -112,6 +125,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_224713) do
   end
 
   add_foreign_key "clients", "organizations"
+  add_foreign_key "invoice_items", "invoices"
   add_foreign_key "invoices", "clients"
   add_foreign_key "invoices", "invoices", column: "corrects_invoice_id"
   add_foreign_key "invoices", "organizations"
