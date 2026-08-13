@@ -4,10 +4,10 @@ one:
   organization: one
   client_name: MyText
   tax_number: MyText
-  country_code: MyString
+  country_code: PL
 
 two:
   organization: two
   client_name: MyText
   tax_number: MyText
-  country_code: MyString
+  country_code: UK
