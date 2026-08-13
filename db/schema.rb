@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_13_223022) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_13_224713) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -84,8 +84,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_223022) do
   end
 
   create_table "organizations", id: :uuid, default: -> { "uuidv7()" }, force: :cascade do |t|
+    t.text "bank_name"
     t.datetime "created_at", null: false
+    t.text "iban"
     t.text "organization_name", null: false
+    t.text "swift_code"
     t.text "tax_number", null: false
     t.datetime "updated_at", null: false
     t.index ["tax_number"], name: "index_organizations_on_tax_number", unique: true

@@ -4,9 +4,9 @@ organizations: {
     id:                   uuid           { constraint: primary_key }
     organization_name:    text           { constraint: NOT NULL }
     tax_number:           text           { constraint: [unique; NOT NULL] }
-    bank_name:            text           { constraint: NOT NULL }
-    iban:                 text           { constraint: NOT NULL }
-    swift_code:           text           { constraint: NOT NULL }
+    bank_name:            text
+    iban:                 text
+    swift_code:           text
     created_at:           timestamptz    { constraint: NOT NULL }
     updated_at:           timestamptz    { constraint: NOT NULL }
 }
