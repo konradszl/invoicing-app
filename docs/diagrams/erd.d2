@@ -1,82 +1,97 @@
 organizations: {
     shape: sql_table
 
-    id:                  uuid        { constraint: primary_key }
-    organization_name:   text        { constraint: NOT NULL }
-    tax_number:          text        { constraint: [unique; NOT NULL]}
-    created_at:          timestamptz { constraint: NOT NULL}
-    updated_at:          timestamptz { constraint: NOT NULL}
+    id:                   uuid           { constraint: primary_key }
+    organization_name:    text           { constraint: NOT NULL }
+    tax_number:           text           { constraint: [unique; NOT NULL] }
+    bank_name:            text           { constraint: NOT NULL }
+    iban:                 text           { constraint: NOT NULL }
+    swift_code:           text           { constraint: NOT NULL }
+    created_at:           timestamptz    { constraint: NOT NULL }
+    updated_at:           timestamptz    { constraint: NOT NULL }
 }
 
 users: {
     shape: sql_table
 
-    id:                  uuid        { constraint: primary_key }
-    email_address:       text        { constraint: [unique; NOT NULL]}
-    password_digest:     text        { constraint: NOT NULL}
-    created_at:          timestamptz { constraint: NOT NULL}
-    updated_at:          timestamptz { constraint: NOT NULL}
+    id:                   uuid           { constraint: primary_key }
+    email_address:        text           { constraint: [unique; NOT NULL] }
+    password_digest:      text           { constraint: NOT NULL }
+    created_at:           timestamptz    { constraint: NOT NULL }
+    updated_at:           timestamptz    { constraint: NOT NULL }
 }
 
 memberships: {
     shape: sql_table
 
-    id:                  uuid        { constraint: primary_key }
-    user_id:             uuid        { constraint: [foreign_key; NOT NULL] }
-    organization_id:     uuid        { constraint: [foreign_key; NOT NULL] }
-    role:                text        { constraint: NOT NULL }
-    created_at:          timestamptz { constraint: NOT NULL}
-    updated_at:          timestamptz { constraint: NOT NULL}
+    id:                   uuid           { constraint: primary_key }
+    user_id:              uuid           { constraint: [foreign_key; NOT NULL] }
+    organization_id:      uuid           { constraint: [foreign_key; NOT NULL] }
+    role:                 text           { constraint: NOT NULL }
+    created_at:           timestamptz    { constraint: NOT NULL }
+    updated_at:           timestamptz    { constraint: NOT NULL }
 }
 
 clients: {
     shape: sql_table
 
-    id:                  uuid        { constraint: primary_key }
-    organization_id:     uuid        { constraint: [foreign_key; NOT NULL] }
-    client_name:         text        { constraint: NOT NULL }
-    tax_number:          text        { constraint: NOT NULL }
-    country_code:        varchar(2)  { constraint: NOT NULL }
-    created_at:          timestamptz { constraint: NOT NULL }
-    updated_at:          timestamptz { constraint: NOT NULL }
+    id:                   uuid           { constraint: primary_key }
+    organization_id:      uuid           { constraint: [foreign_key; NOT NULL] }
+    client_name:          text           { constraint: NOT NULL }
+    tax_number:           text           { constraint: NOT NULL }
+    country_code:         varchar(2)     { constraint: NOT NULL }
+    created_at:           timestamptz    { constraint: NOT NULL }
+    updated_at:           timestamptz    { constraint: NOT NULL }
 }
 
 invoices: {
     shape: sql_table
 
-    id:                  uuid        { constraint: primary_key }
-    organization_id:     uuid        { constraint: [foreign_key; NOT NULL] }
-    client_id:           uuid        { constraint: [foreign_key; NOT NULL] }
-    corrects_invoice_id: uuid        { constraint: foreign_key }
-    invoice_number:      text        { constraint: NOT NULL }
-    document_type:       text        { constraint: NOT NULL }
-    client_name:         text        { constraint: NOT NULL }
-    tax_number:          text        { constraint: NOT NULL }
-    amount_cents:        bigint      { constraint: NOT NULL }
-    currency:            varchar(3)  { constraint: NOT NULL }
-    country:             text        { constraint: NOT NULL }
-    town:                text        { constraint: NOT NULL }
-    street:              text        { constraint: NOT NULL }
-    street_number:       text        { constraint: NOT NULL }
-    postal_code:         text        { constraint: NOT NULL }
-    issue_date:          date        { constraint: NOT NULL }
-    sale_date:           date        { constraint: NOT NULL }
-    status:              text        { constraint: NOT NULL }
-    created_at:          timestamptz { constraint: NOT NULL }
-    updated_at:          timestamptz { constraint: NOT NULL }
+    id:                   uuid           { constraint: primary_key }
+    corrects_invoice_id:  uuid           { constraint: foreign_key }
+    organization_id:      uuid           { constraint: [foreign_key; NOT NULL] }
+    client_id:            uuid           { constraint: [foreign_key; NOT NULL] }
+    document_type:        text           { constraint: NOT NULL }
+    invoice_number:       text           { constraint: NOT NULL }
+    sale_date:            date           { constraint: NOT NULL }
+    issue_date:           date           { constraint: NOT NULL }
+    issue_place:          text           { constraint: NOT NULL }
+    client_name:          text           { constraint: NOT NULL }
+    tax_number:           text           { constraint: NOT NULL }
+    street:               text           { constraint: NOT NULL }
+    street_number:        text           { constraint: NOT NULL }
+    postal_code:          text           { constraint: NOT NULL }
+    town:                 text           { constraint: NOT NULL }
+    country_code:         varchar(2)     { constraint: NOT NULL }
+    bank_name:            text           { constraint: NOT NULL }
+    iban:                 text           { constraint: NOT NULL }
+    swift_code:           text           { constraint: NOT NULL }
+    amount_vat_pln_cents: bigint
+    amount_net_cents:     bigint         { constraint: NOT NULL }
+    amount_gross_cents:   bigint         { constraint: NOT NULL }
+    amount_vat_cents:     bigint         { constraint: NOT NULL }
+    currency:             varchar(3)     { constraint: NOT NULL }
+    exchange_rate:        numeric(12, 6)
+    exchange_rate_date:   date
+    status:               text           { constraint: NOT NULL }
+    payment_method:       text           { constraint: NOT NULL }
+    payment_due_date:     date           { constraint: NOT NULL }
+    paid_at:              date
+    created_at:           timestamptz    { constraint: NOT NULL }
+    updated_at:           timestamptz    { constraint: NOT NULL }
 }
 
 
 invoice_items: {
     shape: sql_table
 
-    id:                  uuid        { constraint: primary_key }
-    invoice_id:          uuid        { constraint: [foreign_key; NOT NULL] }
-    quantity:            integer     { constraint: NOT NULL }
-    price_cents:         bigint      { constraint: NOT NULL }
-    vat_rate:            text        { constraint: NOT NULL }
-    description:         text        { constraint: NOT NULL }
-    unit:                text        { constraint: NOT NULL}
+    id:                   uuid           { constraint: primary_key }
+    invoice_id:           uuid           { constraint: [foreign_key; NOT NULL] }
+    quantity:             numeric(12, 2) { constraint: NOT NULL }
+    unit:                 text           { constraint: NOT NULL }
+    price_net_cents:      bigint         { constraint: NOT NULL }
+    vat_rate:             text           { constraint: NOT NULL }
+    description:          text           { constraint: NOT NULL }
 }
 
 organizations.id -> memberships.organization_id
