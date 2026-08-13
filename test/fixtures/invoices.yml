@@ -1,0 +1,56 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  organization: one
+  client: one
+  document_type: invoice
+  invoice_number: FV/2026/08/001
+  sale_date: 2026-08-14
+  issue_date: 2026-08-14
+  issue_place: Ostrołęka
+  client_name: Test Client One
+  tax_number: "5261040828"
+  street: Marszałkowska
+  street_number: 12a
+  postal_code: 00-001
+  town: Warszawa
+  country_code: PL
+  bank_name: Test Bank
+  iban: PL61109010140000071219812874
+  swift_code: TESTPLPW
+  amount_net_cents: 100000
+  amount_vat_cents: 23000
+  amount_gross_cents: 123000
+  currency: PLN
+  status: draft
+  payment_method: transfer
+  payment_due_date: 2026-08-28
+
+two:
+  organization: two
+  client: two
+  document_type: invoice
+  invoice_number: FV/2026/08/001
+  sale_date: 2026-08-14
+  issue_date: 2026-08-14
+  issue_place: Ostrołęka
+  client_name: Test Client Two
+  tax_number: DE123456789
+  street: Hauptstraße
+  street_number: 5/7
+  postal_code: 10115
+  town: Berlin
+  country_code: DE
+  bank_name: Test Bank
+  iban: PL61109010140000071219812874
+  swift_code: TESTPLPW
+  amount_net_cents: 100000
+  amount_vat_cents: 0
+  amount_gross_cents: 100000
+  amount_vat_pln_cents: 0
+  currency: EUR
+  exchange_rate: 4.265000
+  exchange_rate_date: 2026-08-13
+  status: draft
+  payment_method: transfer
+  payment_due_date: 2026-08-28
